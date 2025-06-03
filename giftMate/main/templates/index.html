@@ -12,6 +12,10 @@
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap");
 
+      html {
+        scroll-behavior: smooth;
+      }
+
       body {
         font-family: "Noto Sans KR", sans-serif;
         background-color: #f8f9fa;
@@ -54,7 +58,7 @@
   </head>
   <body>
     <!-- Navigation -->
-    <nav class="gradient-bg text-white shadow-lg">
+    <nav class="gradient-bg text-white shadow-lg fixed w-full top-0 z-50 transition-all duration-300" id="mainNav">
       <div class="container mx-auto px-4 py-3">
         <div class="flex justify-between items-center">
           <div class="flex items-center space-x-2">
@@ -62,14 +66,13 @@
             <span class="text-xl font-bold">GiftMate</span>
           </div>
           <div class="hidden md:flex space-x-6">
-            <a href="#" class="hover:text-gray-200 transition-all">홈</a>
-            <a href="#" class="hover:text-gray-200 transition-all"
-              >서비스 소개</a
+            <a href="#heroSection" class="hover:text-gray-200 transition-all"><b>홈</b></a>
+            <a href="#IntroduceSection" class="hover:text-gray-200 transition-all"
+              ><b>서비스 소개</b></a
             >
-            <a href="#" class="hover:text-gray-200 transition-all"
-              >자주 묻는 질문</a
+            <a href="#faqSection" class="hover:text-gray-200 transition-all"
+              ><b>자주 묻는 질문</b></a
             >
-            <a href="#" class="hover:text-gray-200 transition-all">고객센터</a>
           </div>
           <div class="md:hidden">
             <button class="text-white focus:outline-none">
@@ -81,7 +84,7 @@
     </nav>
 
     <!-- Hero Section -->
-    <section class="gradient-bg text-white py-16 md:py-24">
+    <section class="gradient-bg text-white pt-32 pb-16 md:pt-40 md:pb-24" id="heroSection">
       <div
         class="container mx-auto px-4 flex flex-col md:flex-row items-center"
       >
@@ -93,16 +96,19 @@
             관계, 상황, 지역을 고려한 맞춤형 축의금 추천 서비스
           </p>
           <div class="flex space-x-4">
+            <a href="#recommendationSection">
             <button
               class="bg-white text-purple-700 hover:bg-gray-100 px-6 py-3 rounded-full font-semibold transition-all"
             >
               시작하기 <i class="fas fa-arrow-right ml-2"></i>
-            </button>
+            </button></a>
+            <a href="#faqSection">
             <button
               class="border border-white text-white hover:bg-white hover:text-purple-700 px-6 py-3 rounded-full font-semibold transition-all"
             >
               더 알아보기
             </button>
+            </a>
           </div>
         </div>
         <div class="md:w-1/2 flex justify-center">
@@ -142,7 +148,7 @@
     </section>
 
     <!-- How It Works -->
-    <section class="py-16 bg-white">
+    <section class="py-16 bg-white" id="IntroduceSection">
       <div class="container mx-auto px-4">
         <h2 class="text-3xl font-bold text-center mb-16">
           GiftMate는 어떻게 작동하나요?
@@ -189,7 +195,7 @@
     </section>
 
     <!-- Recommendation Form -->
-    <section class="py-16 bg-gray-50">
+    <section class="py-16 bg-gray-50" id="recommendationSection">
       <div class="container mx-auto px-4">
         <div
           class="max-w-3xl mx-auto bg-white rounded-xl shadow-md overflow-hidden"
@@ -201,7 +207,7 @@
             </p>
           </div>
           <div class="p-6">
-            <form id="recommendationForm">
+            <form id="recommendationForm" method="POST" action="/api/recommend" enctype="application/x-www-form-urlencoded">
               <div class="mb-6">
                 <label class="block text-gray-700 font-medium mb-2"
                   >결혼하는 분과의 관계</label
@@ -237,8 +243,9 @@
                   >
                     <i class="fas fa-user-tie mr-2 text-purple-600"></i> 친척
                   </button>
+                  
                 </div>
-                <input type="hidden" id="relationship" name="relationship" />
+                <input type="hidden" id="relationship" name="relationship" required />
               </div>
 
               <div class="mb-6">
@@ -256,6 +263,7 @@
                     min="1"
                     max="5"
                     value="3"
+                    required
                     class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
                   />
                   <span class="text-sm text-gray-500 ml-2">높음</span>
@@ -280,11 +288,11 @@
                   name="duration"
                   class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-300"
                 >
-                  <option value="1">1년 미만</option>
-                  <option value="3">1~3년</option>
-                  <option value="5" selected>3~5년</option>
-                  <option value="10">5~10년</option>
-                  <option value="20">10년 이상</option>
+                  <option value="1" name="duration_1">1년 미만</option>
+                  <option value="3" name="duration_3">1~3년</option>
+                  <option value="5" name="duration_5" selected>3~5년</option>
+                  <option value="10" name="duration_10">5~10년</option>
+                  <option value="20" name="duration_20">10년 이상</option>
                 </select>
               </div>
 
@@ -297,21 +305,21 @@
                   name="region"
                   class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-300"
                 >
-                  <option value="seoul" selected>서울</option>
-                  <option value="gyeonggi">경기</option>
-                  <option value="incheon">인천</option>
-                  <option value="busan">부산</option>
-                  <option value="daegu">대구</option>
-                  <option value="daejeon">대전</option>
-                  <option value="ulsan">울산</option>
-                  <option value="gangwon">강원</option>
-                  <option value="chungbuk">충북</option>
-                  <option value="chungnam">충남</option>
-                  <option value="jeonbuk">전북</option>
-                  <option value="jeonnam">전남</option>
-                  <option value="gyeongbuk">경북</option>
-                  <option value="gyeongnam">경남</option>
-                  <option value="jeju">제주</option>
+                  <option value="seoul" name="region_seoul" selected>서울</option>
+                  <option value="gyeonggi" name="region_gyeonggi">경기</option>
+                  <option value="incheon" name="region_incheon">인천</option>
+                  <option value="busan" name="region_busan">부산</option>
+                  <option value="daegu" name="region_daegu">대구</option>
+                  <option value="daejeon" name="region_daejeon">대전</option>
+                  <option value="ulsan" name="region_ulsan">울산</option>
+                  <option value="gangwon" name="region_gangwon">강원</option>
+                  <option value="chungbuk" name="region_chungbuk">충북</option>
+                  <option value="chungnam" name="region_chungnam">충남</option>
+                  <option value="jeonbuk" name="region_jeonbuk">전북</option>
+                  <option value="jeonnam" name="region_jeonnam">전남</option>
+                  <option value="gyeongbuk" name="region_gyeongbuk">경북</option>
+                  <option value="gyeongnam" name="region_gyeongnam">경남</option>
+                  <option value="jeju" name="region_jeju">제주</option>
                 </select>
               </div>
 
@@ -365,9 +373,24 @@
                 </div>
               </div>
 
+              <div class="mb-6">
+                <label for="additionalInfo" class="block text-gray-700 font-medium mb-2"
+                  >추가 정보 (선택사항)</label
+                >
+                <textarea
+                  id="additionalInfo"
+                  name="additionalInfo"
+                  rows="3"
+                  placeholder="AI에게 알려주고 싶은 특별한 상황이나 고려사항을 입력해주세요"
+                  class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-300"
+                ></textarea>
+                <p class="text-sm text-gray-500 mt-1">예: 특별한 경제적 상황, 과거에 준 금액, 특별한 관계 등</p>
+              </div>
+
               <button
                 type="submit"
                 class="w-full gradient-bg text-white py-3 rounded-lg font-semibold hover:opacity-90 transition-all pulse"
+                name="submit"
               >
                 AI 추천 받기 <i class="fas fa-magic ml-2"></i>
               </button>
@@ -614,7 +637,7 @@
     </section>
 
     <!-- FAQ -->
-    <section class="py-16 bg-white">
+    <section class="py-16 bg-white" id="faqSection">
       <div class="container mx-auto px-4 max-w-3xl">
         <h2 class="text-3xl font-bold text-center mb-12">자주 묻는 질문</h2>
         <div class="space-y-4">
@@ -719,140 +742,15 @@
     </section>
 
     <!-- Footer -->
-    <footer class="bg-gray-900 text-white py-12">
-      <div class="container mx-auto px-4">
-        <div class="grid md:grid-cols-4 gap-8 mb-8">
-          <div>
-            <div class="flex items-center space-x-2 mb-4">
-              <i class="fas fa-gift text-2xl"></i>
-              <span class="text-xl font-bold">GiftMate</span>
-            </div>
-            <p class="text-gray-400">
-              AI 기술로 완벽한 축의금을 추천해 드리는 GiftMate. 관계와 상황에
-              맞는 합리적인 금액을 제안합니다.
-            </p>
-          </div>
-          <div>
-            <h4 class="font-bold text-lg mb-4">서비스</h4>
-            <ul class="space-y-2">
-              <li>
-                <a
-                  href="#"
-                  class="text-gray-400 hover:text-white transition-all"
-                  >AI 추천</a
-                >
-              </li>
-              <li>
-                <a
-                  href="#"
-                  class="text-gray-400 hover:text-white transition-all"
-                  >축하 메시지 생성</a
-                >
-              </li>
-              <li>
-                <a
-                  href="#"
-                  class="text-gray-400 hover:text-white transition-all"
-                  >지역별 평균 금액</a
-                >
-              </li>
-              <li>
-                <a
-                  href="#"
-                  class="text-gray-400 hover:text-white transition-all"
-                  >관계별 가이드</a
-                >
-              </li>
-            </ul>
-          </div>
-          <div>
-            <h4 class="font-bold text-lg mb-4">회사</h4>
-            <ul class="space-y-2">
-              <li>
-                <a
-                  href="#"
-                  class="text-gray-400 hover:text-white transition-all"
-                  >About Us</a
-                >
-              </li>
-              <li>
-                <a
-                  href="#"
-                  class="text-gray-400 hover:text-white transition-all"
-                  >팀 소개</a
-                >
-              </li>
-              <li>
-                <a
-                  href="#"
-                  class="text-gray-400 hover:text-white transition-all"
-                  >채용</a
-                >
-              </li>
-              <li>
-                <a
-                  href="#"
-                  class="text-gray-400 hover:text-white transition-all"
-                  >블로그</a
-                >
-              </li>
-            </ul>
-          </div>
-          <div>
-            <h4 class="font-bold text-lg mb-4">고객 지원</h4>
-            <ul class="space-y-2">
-              <li>
-                <a
-                  href="#"
-                  class="text-gray-400 hover:text-white transition-all"
-                  >자주 묻는 질문</a
-                >
-              </li>
-              <li>
-                <a
-                  href="#"
-                  class="text-gray-400 hover:text-white transition-all"
-                  >문의하기</a
-                >
-              </li>
-              <li>
-                <a
-                  href="#"
-                  class="text-gray-400 hover:text-white transition-all"
-                  >이용 약관</a
-                >
-              </li>
-              <li>
-                <a
-                  href="#"
-                  class="text-gray-400 hover:text-white transition-all"
-                  >개인정보 처리방침</a
-                >
-              </li>
-            </ul>
-          </div>
+    <footer class="bg-gray-900 text-white py-8">
+      <div class="container mx-auto px-4 text-center">
+        <div class="flex items-center justify-center space-x-2 mb-4">
+          <i class="fas fa-gift text-xl"></i>
+          <span class="text-lg">GiftMate</span>
         </div>
-        <div
-          class="pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center"
-        >
-          <p class="text-gray-400 mb-4 md:mb-0">
-            © 2023 GiftMate. All rights reserved.
-          </p>
-          <div class="flex space-x-6">
-            <a href="#" class="text-gray-400 hover:text-white transition-all"
-              ><i class="fab fa-facebook-f"></i
-            ></a>
-            <a href="#" class="text-gray-400 hover:text-white transition-all"
-              ><i class="fab fa-twitter"></i
-            ></a>
-            <a href="#" class="text-gray-400 hover:text-white transition-all"
-              ><i class="fab fa-instagram"></i
-            ></a>
-            <a href="#" class="text-gray-400 hover:text-white transition-all"
-              ><i class="fab fa-linkedin-in"></i
-            ></a>
-          </div>
-        </div>
+        <p class="text-gray-400 text-sm">
+          © 2025 GiftMate - 학교 서버 수행평가 프로젝트
+        </p>
       </div>
     </footer>
 
@@ -876,6 +774,20 @@
           // Update hidden input value
           relationshipInput.value = button.dataset.value;
         });
+      });
+
+      // Sticky Nav Scroll Effect
+      const nav = document.getElementById("mainNav");
+      const heroSection = document.getElementById("heroSection");
+      
+      window.addEventListener("scroll", () => {
+        if (window.scrollY > heroSection.offsetHeight * 0.5) {
+          nav.classList.add("shadow-xl", "py-2");
+          nav.classList.remove("py-3");
+        } else {
+          nav.classList.remove("shadow-xl", "py-2");
+          nav.classList.add("py-3");
+        }
       });
 
       // FAQ accordion
@@ -917,8 +829,10 @@
         const attendance = document.querySelector(
           'input[name="attendance"]:checked'
         ).value;
+        const additionalInfo = document.getElementById("additionalInfo").value;
 
         // Simulate AI recommendation (in a real app, this would be an API call)
+        // In a real implementation, the additionalInfo would be sent to the AI model
         let recommendedAmount = 0;
         let relationshipText = "";
 
