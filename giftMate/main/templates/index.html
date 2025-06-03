@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GiftMate - AI 축의금 추천 서비스</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap");
+
+      body {
+        font-family: "Noto Sans KR", sans-serif;
+        background-color: #f8f9fa;
+      }
+
+      .gradient-bg {
+        background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+      }
+
+      .card-hover:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .transition-all {
+        transition: all 0.3s ease;
+      }
+
+      .result-card {
+        background: linear-gradient(to right, #ffffff, #f8f9fa);
+        border-left: 4px solid #6a11cb;
+      }
+
+      .pulse {
+        animation: pulse 2s infinite;
+      }
+
+      @keyframes pulse {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.05);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav class="gradient-bg text-white shadow-lg">
+      <div class="container mx-auto px-4 py-3">
+        <div class="flex justify-between items-center">
+          <div class="flex items-center space-x-2">
+            <i class="fas fa-gift text-2xl"></i>
+            <span class="text-xl font-bold">GiftMate</span>
+          </div>
+          <div class="hidden md:flex space-x-6">
+            <a href="#" class="hover:text-gray-200 transition-all">홈</a>
+            <a href="#" class="hover:text-gray-200 transition-all"
+              >서비스 소개</a
+            >
+            <a href="#" class="hover:text-gray-200 transition-all"
+              >자주 묻는 질문</a
+            >
+            <a href="#" class="hover:text-gray-200 transition-all">고객센터</a>
+          </div>
+          <div class="md:hidden">
+            <button class="text-white focus:outline-none">
+              <i class="fas fa-bars text-2xl"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="gradient-bg text-white py-16 md:py-24">
+      <div
+        class="container mx-auto px-4 flex flex-col md:flex-row items-center"
+      >
+        <div class="md:w-1/2 mb-10 md:mb-0">
+          <h1 class="text-4xl md:text-5xl font-bold mb-4">
+            AI가 추천하는 완벽한 축의금
+          </h1>
+          <p class="text-xl mb-8">
+            관계, 상황, 지역을 고려한 맞춤형 축의금 추천 서비스
+          </p>
+          <div class="flex space-x-4">
+            <button
+              class="bg-white text-purple-700 hover:bg-gray-100 px-6 py-3 rounded-full font-semibold transition-all"
+            >
+              시작하기 <i class="fas fa-arrow-right ml-2"></i>
+            </button>
+            <button
+              class="border border-white text-white hover:bg-white hover:text-purple-700 px-6 py-3 rounded-full font-semibold transition-all"
+            >
+              더 알아보기
+            </button>
+          </div>
+        </div>
+        <div class="md:w-1/2 flex justify-center">
+          <div class="relative">
+            <div
+              class="bg-white rounded-2xl p-6 shadow-xl w-64 h-80 transform rotate-3 absolute -top-4 -left-4 opacity-70"
+            ></div>
+            <div
+              class="bg-white rounded-2xl p-6 shadow-xl w-64 h-80 transform -rotate-3 absolute -bottom-4 -right-4 opacity-70"
+            ></div>
+            <div
+              class="bg-white rounded-2xl p-6 shadow-xl w-64 h-80 relative z-10"
+            >
+              <div class="flex justify-between items-center mb-4">
+                <div class="bg-purple-100 text-purple-700 p-2 rounded-lg">
+                  <i class="fas fa-heart"></i>
+                </div>
+                <span class="text-sm text-gray-500">결혼식</span>
+              </div>
+              <h3 class="font-bold text-lg mb-2">김민수 & 이지은 결혼식</h3>
+              <p class="text-gray-600 text-sm mb-4">
+                2023년 10월 15일 (토) 오후 2시
+              </p>
+              <div class="bg-purple-50 rounded-lg p-3 mb-4">
+                <p class="text-purple-700 text-sm font-medium">AI 추천 금액</p>
+                <p class="text-2xl font-bold text-purple-900">150,000원</p>
+              </div>
+              <div class="text-xs text-gray-500">
+                <p class="mb-1">• 대학 동기 (5년 지기)</p>
+                <p class="mb-1">• 서울 지역 평균 기준</p>
+                <p>• 평균보다 10% 높은 금액</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="py-16 bg-white">
+      <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-bold text-center mb-16">
+          GiftMate는 어떻게 작동하나요?
+        </h2>
+        <div class="grid md:grid-cols-3 gap-8">
+          <div class="bg-gray-50 p-6 rounded-xl transition-all card-hover">
+            <div
+              class="bg-purple-100 text-purple-700 w-12 h-12 rounded-full flex items-center justify-center mb-4"
+            >
+              <i class="fas fa-user-friends text-xl"></i>
+            </div>
+            <h3 class="font-bold text-xl mb-3">관계 입력</h3>
+            <p class="text-gray-600">
+              결혼하는 분과의 관계, 친밀도, 지인 기간 등을 선택하세요. 가족,
+              친구, 직장 동료 등 다양한 관계를 고려합니다.
+            </p>
+          </div>
+          <div class="bg-gray-50 p-6 rounded-xl transition-all card-hover">
+            <div
+              class="bg-purple-100 text-purple-700 w-12 h-12 rounded-full flex items-center justify-center mb-4"
+            >
+              <i class="fas fa-map-marker-alt text-xl"></i>
+            </div>
+            <h3 class="font-bold text-xl mb-3">상황 설정</h3>
+            <p class="text-gray-600">
+              결혼식 장소, 시간, 참석 여부 등을 입력하세요. 지역별 평균 금액과
+              상황에 맞는 적정 금액을 분석합니다.
+            </p>
+          </div>
+          <div class="bg-gray-50 p-6 rounded-xl transition-all card-hover">
+            <div
+              class="bg-purple-100 text-purple-700 w-12 h-12 rounded-full flex items-center justify-center mb-4"
+            >
+              <i class="fas fa-robot text-xl"></i>
+            </div>
+            <h3 class="font-bold text-xl mb-3">AI 추천</h3>
+            <p class="text-gray-600">
+              수천 건의 데이터를 학습한 AI가 당신에게 가장 적합한 축의금 금액을
+              추천해 드립니다. 부담스럽지 않은 합리적인 금액!
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Recommendation Form -->
+    <section class="py-16 bg-gray-50">
+      <div class="container mx-auto px-4">
+        <div
+          class="max-w-3xl mx-auto bg-white rounded-xl shadow-md overflow-hidden"
+        >
+          <div class="gradient-bg text-white p-6">
+            <h2 class="text-2xl font-bold">축의금 추천 받기</h2>
+            <p class="opacity-90">
+              간단한 정보를 입력하면 AI가 맞춤형 축의금을 추천해드립니다.
+            </p>
+          </div>
+          <div class="p-6">
+            <form id="recommendationForm">
+              <div class="mb-6">
+                <label class="block text-gray-700 font-medium mb-2"
+                  >결혼하는 분과의 관계</label
+                >
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                  <button
+                    type="button"
+                    class="relation-btn border border-gray-300 rounded-lg py-2 px-4 hover:bg-purple-50 hover:border-purple-300 transition-all"
+                    data-value="family"
+                  >
+                    <i class="fas fa-users mr-2 text-purple-600"></i> 가족
+                  </button>
+                  <button
+                    type="button"
+                    class="relation-btn border border-gray-300 rounded-lg py-2 px-4 hover:bg-purple-50 hover:border-purple-300 transition-all"
+                    data-value="friend"
+                  >
+                    <i class="fas fa-user-friends mr-2 text-purple-600"></i>
+                    친구
+                  </button>
+                  <button
+                    type="button"
+                    class="relation-btn border border-gray-300 rounded-lg py-2 px-4 hover:bg-purple-50 hover:border-purple-300 transition-all"
+                    data-value="coworker"
+                  >
+                    <i class="fas fa-briefcase mr-2 text-purple-600"></i>
+                    직장동료
+                  </button>
+                  <button
+                    type="button"
+                    class="relation-btn border border-gray-300 rounded-lg py-2 px-4 hover:bg-purple-50 hover:border-purple-300 transition-all"
+                    data-value="relative"
+                  >
+                    <i class="fas fa-user-tie mr-2 text-purple-600"></i> 친척
+                  </button>
+                </div>
+                <input type="hidden" id="relationship" name="relationship" />
+              </div>
+
+              <div class="mb-6">
+                <label
+                  for="closeness"
+                  class="block text-gray-700 font-medium mb-2"
+                  >친밀도</label
+                >
+                <div class="flex items-center">
+                  <span class="text-sm text-gray-500 mr-2">낮음</span>
+                  <input
+                    type="range"
+                    id="closeness"
+                    name="closeness"
+                    min="1"
+                    max="5"
+                    value="3"
+                    class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+                  />
+                  <span class="text-sm text-gray-500 ml-2">높음</span>
+                </div>
+                <div class="flex justify-between mt-1">
+                  <span class="text-xs text-gray-500">1</span>
+                  <span class="text-xs text-gray-500">2</span>
+                  <span class="text-xs text-gray-500">3</span>
+                  <span class="text-xs text-gray-500">4</span>
+                  <span class="text-xs text-gray-500">5</span>
+                </div>
+              </div>
+
+              <div class="mb-6">
+                <label
+                  for="duration"
+                  class="block text-gray-700 font-medium mb-2"
+                  >알고 지낸 기간</label
+                >
+                <select
+                  id="duration"
+                  name="duration"
+                  class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-300"
+                >
+                  <option value="1">1년 미만</option>
+                  <option value="3">1~3년</option>
+                  <option value="5" selected>3~5년</option>
+                  <option value="10">5~10년</option>
+                  <option value="20">10년 이상</option>
+                </select>
+              </div>
+
+              <div class="mb-6">
+                <label for="region" class="block text-gray-700 font-medium mb-2"
+                  >결혼식 지역</label
+                >
+                <select
+                  id="region"
+                  name="region"
+                  class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-300"
+                >
+                  <option value="seoul" selected>서울</option>
+                  <option value="gyeonggi">경기</option>
+                  <option value="incheon">인천</option>
+                  <option value="busan">부산</option>
+                  <option value="daegu">대구</option>
+                  <option value="daejeon">대전</option>
+                  <option value="ulsan">울산</option>
+                  <option value="gangwon">강원</option>
+                  <option value="chungbuk">충북</option>
+                  <option value="chungnam">충남</option>
+                  <option value="jeonbuk">전북</option>
+                  <option value="jeonnam">전남</option>
+                  <option value="gyeongbuk">경북</option>
+                  <option value="gyeongnam">경남</option>
+                  <option value="jeju">제주</option>
+                </select>
+              </div>
+
+              <div class="mb-6">
+                <label class="block text-gray-700 font-medium mb-2"
+                  >참석 여부</label
+                >
+                <div class="flex space-x-4">
+                  <label class="inline-flex items-center">
+                    <input
+                      type="radio"
+                      name="attendance"
+                      value="yes"
+                      checked
+                      class="h-4 w-4 text-purple-600 focus:ring-purple-300"
+                    />
+                    <span class="ml-2">참석</span>
+                  </label>
+                  <label class="inline-flex items-center">
+                    <input
+                      type="radio"
+                      name="attendance"
+                      value="no"
+                      class="h-4 w-4 text-purple-600 focus:ring-purple-300"
+                    />
+                    <span class="ml-2">불참</span>
+                  </label>
+                </div>
+              </div>
+
+              <div class="mb-6">
+                <label for="budget" class="block text-gray-700 font-medium mb-2"
+                  >예산 범위 (선택사항)</label
+                >
+                <div class="flex items-center space-x-4">
+                  <input
+                    type="number"
+                    id="budget_min"
+                    name="budget_min"
+                    placeholder="최소"
+                    class="border border-gray-300 rounded-lg px-4 py-2 w-1/2 focus:outline-none focus:ring-2 focus:ring-purple-300"
+                  />
+                  <span>~</span>
+                  <input
+                    type="number"
+                    id="budget_max"
+                    name="budget_max"
+                    placeholder="최대"
+                    class="border border-gray-300 rounded-lg px-4 py-2 w-1/2 focus:outline-none focus:ring-2 focus:ring-purple-300"
+                  />
+                </div>
+              </div>
+
+              <button
+                type="submit"
+                class="w-full gradient-bg text-white py-3 rounded-lg font-semibold hover:opacity-90 transition-all pulse"
+              >
+                AI 추천 받기 <i class="fas fa-magic ml-2"></i>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Recommendation Result (Initially Hidden) -->
+    <section id="resultSection" class="py-16 bg-white hidden">
+      <div class="container mx-auto px-4">
+        <div class="max-w-3xl mx-auto">
+          <div
+            class="result-card rounded-xl shadow-md overflow-hidden p-6 mb-8 transition-all"
+          >
+            <div class="flex justify-between items-start mb-4">
+              <div>
+                <h2 class="text-2xl font-bold text-purple-800">AI 추천 결과</h2>
+                <p class="text-gray-600">
+                  입력하신 정보를 바탕으로 최적의 축의금을 추천해드립니다.
+                </p>
+              </div>
+              <button id="resetBtn" class="text-gray-500 hover:text-purple-700">
+                <i class="fas fa-redo"></i> 다시하기
+              </button>
+            </div>
+
+            <div
+              class="flex flex-col md:flex-row items-center justify-between bg-purple-50 rounded-lg p-6 mb-6"
+            >
+              <div>
+                <p class="text-purple-700 font-medium mb-1">추천 금액</p>
+                <p
+                  id="recommendedAmount"
+                  class="text-3xl font-bold text-purple-900"
+                >
+                  150,000원
+                </p>
+              </div>
+              <div class="mt-4 md:mt-0">
+                <div class="flex items-center text-yellow-500 mb-1">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star-half-alt"></i>
+                  <span class="text-gray-700 ml-2">4.5/5 적합도</span>
+                </div>
+                <p class="text-sm text-gray-600">
+                  이 금액은 해당 지역 평균의
+                  <span class="font-medium">105%</span> 수준입니다.
+                </p>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+              <div class="bg-white border border-gray-200 rounded-lg p-4">
+                <p class="text-sm text-gray-500 mb-1">관계</p>
+                <p id="resultRelationship" class="font-medium">
+                  대학 동기 (5년 지기)
+                </p>
+              </div>
+              <div class="bg-white border border-gray-200 rounded-lg p-4">
+                <p class="text-sm text-gray-500 mb-1">지역</p>
+                <p id="resultRegion" class="font-medium">서울</p>
+              </div>
+              <div class="bg-white border border-gray-200 rounded-lg p-4">
+                <p class="text-sm text-gray-500 mb-1">참석 여부</p>
+                <p id="resultAttendance" class="font-medium">참석</p>
+              </div>
+              <div class="bg-white border border-gray-200 rounded-lg p-4">
+                <p class="text-sm text-gray-500 mb-1">친밀도</p>
+                <p id="resultCloseness" class="font-medium">보통 (3/5)</p>
+              </div>
+            </div>
+
+            <div class="bg-blue-50 border-l-4 border-blue-400 p-4 mb-6">
+              <div class="flex">
+                <div class="flex-shrink-0 text-blue-400">
+                  <i class="fas fa-info-circle"></i>
+                </div>
+                <div class="ml-3">
+                  <p class="text-sm text-blue-700">
+                    <span class="font-medium">AI 분석:</span> 평균보다 약간 높은
+                    금액을 추천드렸습니다. 오랜 기간 알고 지낸 관계이지만
+                    친밀도가 보통 수준이므로 이 금액이 적절합니다.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-3"
+            >
+              <button
+                class="flex-1 bg-purple-600 text-white py-3 rounded-lg font-semibold hover:bg-purple-700 transition-all"
+              >
+                <i class="fas fa-envelope mr-2"></i> 축하 메시지 생성
+              </button>
+              <button
+                class="flex-1 border border-purple-600 text-purple-600 py-3 rounded-lg font-semibold hover:bg-purple-50 transition-all"
+              >
+                <i class="fas fa-share-alt mr-2"></i> 공유하기
+              </button>
+              <button
+                class="flex-1 border border-gray-300 text-gray-700 py-3 rounded-lg font-semibold hover:bg-gray-50 transition-all"
+              >
+                <i class="fas fa-download mr-2"></i> PDF 저장
+              </button>
+            </div>
+          </div>
+
+          <div class="bg-gray-50 rounded-xl p-6">
+            <h3 class="font-bold text-lg mb-4">이런 점도 고려해보세요</h3>
+            <div class="space-y-4">
+              <div class="flex items-start">
+                <div class="flex-shrink-0 h-5 w-5 text-purple-500 mt-1">
+                  <i class="fas fa-lightbulb"></i>
+                </div>
+                <div class="ml-3">
+                  <p class="text-gray-700">
+                    <span class="font-medium">홀수 금액 권장:</span>
+                    110,000원이나 130,000원처럼 홀수 금액이 일반적입니다. 짝수
+                    금액은 부부가 나눠가질 수 있다는 의미로 장례식 등에
+                    사용됩니다.
+                  </p>
+                </div>
+              </div>
+              <div class="flex items-start">
+                <div class="flex-shrink-0 h-5 w-5 text-purple-500 mt-1">
+                  <i class="fas fa-lightbulb"></i>
+                </div>
+                <div class="ml-3">
+                  <p class="text-gray-700">
+                    <span class="font-medium">봉투 선택:</span> 결혼식에는 흰색
+                    또는 연한 색상의 봉투를 사용하세요. 붉은색은 혼인 관계가
+                    아닌 분들에게 사용하는 색입니다.
+                  </p>
+                </div>
+              </div>
+              <div class="flex items-start">
+                <div class="flex-shrink-0 h-5 w-5 text-purple-500 mt-1">
+                  <i class="fas fa-lightbulb"></i>
+                </div>
+                <div class="ml-3">
+                  <p class="text-gray-700">
+                    <span class="font-medium">작성 요령:</span> 봉투 앞면 우측
+                    상단에 "축 결혼"이라고 쓰고, 중앙에는 성명을 적습니다. 뒷면
+                    좌측 하단에는 본인의 성명과 주소를 기입합니다.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="py-16 bg-purple-50">
+      <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-bold text-center mb-12">사용자 후기</h2>
+        <div class="grid md:grid-cols-3 gap-8">
+          <div
+            class="bg-white p-6 rounded-xl shadow-sm transition-all card-hover"
+          >
+            <div class="flex items-center mb-4">
+              <div
+                class="bg-purple-100 text-purple-700 w-10 h-10 rounded-full flex items-center justify-center mr-3"
+              >
+                <i class="fas fa-user"></i>
+              </div>
+              <div>
+                <h4 class="font-bold">김지현</h4>
+                <div class="flex text-yellow-400 text-sm">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                </div>
+              </div>
+            </div>
+            <p class="text-gray-600">
+              "직장 상사 결혼식에 가야 하는데 얼마를 내야 할지 고민이 많았어요.
+              GiftMate 덕분에 적정 금액을 쉽게 알아낼 수 있었고, 상사도
+              만족하셨습니다!"
+            </p>
+          </div>
+          <div
+            class="bg-white p-6 rounded-xl shadow-sm transition-all card-hover"
+          >
+            <div class="flex items-center mb-4">
+              <div
+                class="bg-purple-100 text-purple-700 w-10 h-10 rounded-full flex items-center justify-center mr-3"
+              >
+                <i class="fas fa-user"></i>
+              </div>
+              <div>
+                <h4 class="font-bold">박준호</h4>
+                <div class="flex text-yellow-400 text-sm">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star-half-alt"></i>
+                </div>
+              </div>
+            </div>
+            <p class="text-gray-600">
+              "지방에 사는 사촌 결혼식에 갈 때 지역별 차이가 있을 거라 생각 못
+              했는데, AI가 지역별 평균까지 고려해 추천해줘서 큰 도움 됐어요."
+            </p>
+          </div>
+          <div
+            class="bg-white p-6 rounded-xl shadow-sm transition-all card-hover"
+          >
+            <div class="flex items-center mb-4">
+              <div
+                class="bg-purple-100 text-purple-700 w-10 h-10 rounded-full flex items-center justify-center mr-3"
+              >
+                <i class="fas fa-user"></i>
+              </div>
+              <div>
+                <h4 class="font-bold">이수민</h4>
+                <div class="flex text-yellow-400 text-sm">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                </div>
+              </div>
+            </div>
+            <p class="text-gray-600">
+              "대학 동기 결혼식에 불참할 때는 얼마를 보내야 할지 막막했는데,
+              GiftMate가 불참 시 적정 금액까지 알려줘서 정말 편했어요. 축하
+              메시지 생성 기능도 유용했습니다!"
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="py-16 bg-white">
+      <div class="container mx-auto px-4 max-w-3xl">
+        <h2 class="text-3xl font-bold text-center mb-12">자주 묻는 질문</h2>
+        <div class="space-y-4">
+          <div class="border border-gray-200 rounded-lg overflow-hidden">
+            <button
+              class="faq-btn w-full text-left p-4 hover:bg-gray-50 transition-all flex justify-between items-center"
+            >
+              <span class="font-medium"
+                >GiftMate의 추천 금액은 얼마나 정확한가요?</span
+              >
+              <i
+                class="fas fa-chevron-down text-purple-600 transition-transform"
+              ></i>
+            </button>
+            <div class="faq-content hidden px-4 pb-4">
+              <p class="text-gray-600">
+                GiftMate는 수천 건의 실제 축의금 데이터와 지역별, 관계별 통계를
+                기반으로 AI 모델을 학습시켰습니다. 일반적으로 90% 이상의
+                사용자가 추천 금액에 만족한다는 피드백을 주셨습니다. 다만
+                개인적인 사정이나 특별한 관계에 따라 조정이 필요할 수 있습니다.
+              </p>
+            </div>
+          </div>
+          <div class="border border-gray-200 rounded-lg overflow-hidden">
+            <button
+              class="faq-btn w-full text-left p-4 hover:bg-gray-50 transition-all flex justify-between items-center"
+            >
+              <span class="font-medium"
+                >불참할 때와 참석할 때 축의금 차이가 있나요?</span
+              >
+              <i
+                class="fas fa-chevron-down text-purple-600 transition-transform"
+              ></i>
+            </button>
+            <div class="faq-content hidden px-4 pb-4">
+              <p class="text-gray-600">
+                네, 일반적으로 불참 시에는 참석 시보다 20~30% 정도 적은 금액을
+                권장합니다. 이는 식사 비용 등이 포함되지 않기 때문입니다.
+                GiftMate는 참석 여부를 고려해 자동으로 적정 금액을 조정해
+                드립니다.
+              </p>
+            </div>
+          </div>
+          <div class="border border-gray-200 rounded-lg overflow-hidden">
+            <button
+              class="faq-btn w-full text-left p-4 hover:bg-gray-50 transition-all flex justify-between items-center"
+            >
+              <span class="font-medium"
+                >결혼식 외에 다른 행사에도 사용할 수 있나요?</span
+              >
+              <i
+                class="fas fa-chevron-down text-purple-600 transition-transform"
+              ></i>
+            </button>
+            <div class="faq-content hidden px-4 pb-4">
+              <p class="text-gray-600">
+                현재는 결혼식 축의금 추천에 특화되어 있지만, 추후 돌잔치, 환갑宴
+                등 다양한 행사에 대한 지원을 확장할 계획입니다. 특별한 행사에
+                대한 문의는 고객센터로 연락주시면 개별적으로 상담해
+                드리겠습니다.
+              </p>
+            </div>
+          </div>
+          <div class="border border-gray-200 rounded-lg overflow-hidden">
+            <button
+              class="faq-btn w-full text-left p-4 hover:bg-gray-50 transition-all flex justify-between items-center"
+            >
+              <span class="font-medium"
+                >추천 금액에 만족하지 못할 경우 어떻게 해야 하나요?</span
+              >
+              <i
+                class="fas fa-chevron-down text-purple-600 transition-transform"
+              ></i>
+            </button>
+            <div class="faq-content hidden px-4 pb-4">
+              <p class="text-gray-600">
+                결과 페이지에서 '수동 조정' 버튼을 클릭하면 금액을 직접 조정할
+                수 있습니다. 또한 예산 범위를 지정해 재검색할 수도 있습니다.
+                여러 번 시도해 보시면 가장 적합한 금액을 찾을 수 있을 거예요.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="gradient-bg text-white py-16">
+      <div class="container mx-auto px-4 text-center">
+        <h2 class="text-3xl font-bold mb-6">
+          지금 바로 완벽한 축의금을 추천 받아보세요
+        </h2>
+        <p class="text-xl mb-8 max-w-2xl mx-auto">
+          GiftMate와 함께라면 축의금 고민은 이제 그만!
+        </p>
+        <button
+          class="bg-white text-purple-700 hover:bg-gray-100 px-8 py-4 rounded-full font-semibold text-lg transition-all"
+        >
+          무료로 시작하기 <i class="fas fa-arrow-right ml-2"></i>
+        </button>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+      <div class="container mx-auto px-4">
+        <div class="grid md:grid-cols-4 gap-8 mb-8">
+          <div>
+            <div class="flex items-center space-x-2 mb-4">
+              <i class="fas fa-gift text-2xl"></i>
+              <span class="text-xl font-bold">GiftMate</span>
+            </div>
+            <p class="text-gray-400">
+              AI 기술로 완벽한 축의금을 추천해 드리는 GiftMate. 관계와 상황에
+              맞는 합리적인 금액을 제안합니다.
+            </p>
+          </div>
+          <div>
+            <h4 class="font-bold text-lg mb-4">서비스</h4>
+            <ul class="space-y-2">
+              <li>
+                <a
+                  href="#"
+                  class="text-gray-400 hover:text-white transition-all"
+                  >AI 추천</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="text-gray-400 hover:text-white transition-all"
+                  >축하 메시지 생성</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="text-gray-400 hover:text-white transition-all"
+                  >지역별 평균 금액</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="text-gray-400 hover:text-white transition-all"
+                  >관계별 가이드</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="font-bold text-lg mb-4">회사</h4>
+            <ul class="space-y-2">
+              <li>
+                <a
+                  href="#"
+                  class="text-gray-400 hover:text-white transition-all"
+                  >About Us</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="text-gray-400 hover:text-white transition-all"
+                  >팀 소개</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="text-gray-400 hover:text-white transition-all"
+                  >채용</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="text-gray-400 hover:text-white transition-all"
+                  >블로그</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="font-bold text-lg mb-4">고객 지원</h4>
+            <ul class="space-y-2">
+              <li>
+                <a
+                  href="#"
+                  class="text-gray-400 hover:text-white transition-all"
+                  >자주 묻는 질문</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="text-gray-400 hover:text-white transition-all"
+                  >문의하기</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="text-gray-400 hover:text-white transition-all"
+                  >이용 약관</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="text-gray-400 hover:text-white transition-all"
+                  >개인정보 처리방침</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div
+          class="pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center"
+        >
+          <p class="text-gray-400 mb-4 md:mb-0">
+            © 2023 GiftMate. All rights reserved.
+          </p>
+          <div class="flex space-x-6">
+            <a href="#" class="text-gray-400 hover:text-white transition-all"
+              ><i class="fab fa-facebook-f"></i
+            ></a>
+            <a href="#" class="text-gray-400 hover:text-white transition-all"
+              ><i class="fab fa-twitter"></i
+            ></a>
+            <a href="#" class="text-gray-400 hover:text-white transition-all"
+              ><i class="fab fa-instagram"></i
+            ></a>
+            <a href="#" class="text-gray-400 hover:text-white transition-all"
+              ><i class="fab fa-linkedin-in"></i
+            ></a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      // Relationship buttons
+      const relationButtons = document.querySelectorAll(".relation-btn");
+      const relationshipInput = document.getElementById("relationship");
+
+      relationButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          // Remove active class from all buttons
+          relationButtons.forEach((btn) => {
+            btn.classList.remove("bg-purple-100", "border-purple-300");
+            btn.classList.add("border-gray-300");
+          });
+
+          // Add active class to clicked button
+          button.classList.add("bg-purple-100", "border-purple-300");
+          button.classList.remove("border-gray-300");
+
+          // Update hidden input value
+          relationshipInput.value = button.dataset.value;
+        });
+      });
+
+      // FAQ accordion
+      const faqButtons = document.querySelectorAll(".faq-btn");
+
+      faqButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          const content = button.nextElementSibling;
+          const icon = button.querySelector("i");
+
+          // Toggle content visibility
+          content.classList.toggle("hidden");
+
+          // Rotate icon
+          icon.classList.toggle("rotate-180");
+
+          // Close other open FAQs
+          faqButtons.forEach((otherButton) => {
+            if (otherButton !== button) {
+              otherButton.nextElementSibling.classList.add("hidden");
+              otherButton.querySelector("i").classList.remove("rotate-180");
+            }
+          });
+        });
+      });
+
+      // Form submission
+      const recommendationForm = document.getElementById("recommendationForm");
+      const resultSection = document.getElementById("resultSection");
+
+      recommendationForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        // Get form values
+        const relationship = relationshipInput.value || "friend";
+        const closeness = document.getElementById("closeness").value;
+        const duration = document.getElementById("duration").value;
+        const region = document.getElementById("region").value;
+        const attendance = document.querySelector(
+          'input[name="attendance"]:checked'
+        ).value;
+
+        // Simulate AI recommendation (in a real app, this would be an API call)
+        let recommendedAmount = 0;
+        let relationshipText = "";
+
+        // Calculate based on relationship
+        switch (relationship) {
+          case "family":
+            recommendedAmount = 200000;
+            relationshipText = "가족 (형제자매)";
+            break;
+          case "friend":
+            recommendedAmount = 150000;
+            relationshipText = "대학 동기 (5년 지기)";
+            break;
+          case "coworker":
+            recommendedAmount = 100000;
+            relationshipText = "직장 동료";
+            break;
+          case "relative":
+            recommendedAmount = 180000;
+            relationshipText = "친척 (사촌)";
+            break;
+          default:
+            recommendedAmount = 120000;
+            relationshipText = "지인";
+        }
+
+        // Adjust based on closeness
+        recommendedAmount *= 1 + (parseInt(closeness) - 3) * 0.1;
+
+        // Adjust based on duration
+        if (duration >= 10) recommendedAmount *= 1.2;
+        else if (duration >= 5) recommendedAmount *= 1.1;
+        else if (duration <= 1) recommendedAmount *= 0.9;
+
+        // Adjust based on attendance
+        if (attendance === "no") recommendedAmount *= 0.7;
+
+        // Round to nearest 10,000
+        recommendedAmount = Math.round(recommendedAmount / 10000) * 10000;
+
+        // Update result display
+        document.getElementById("recommendedAmount").textContent =
+          recommendedAmount.toLocaleString() + "원";
+        document.getElementById("resultRelationship").textContent =
+          relationshipText;
+        document.getElementById("resultRegion").textContent =
+          document.getElementById("region").options[
+            document.getElementById("region").selectedIndex
+          ].text;
+        document.getElementById("resultAttendance").textContent =
+          attendance === "yes" ? "참석" : "불참";
+        document.getElementById("resultCloseness").textContent = `${
+          closeness == 1
+            ? "매우 낮음"
+            : closeness == 2
+            ? "낮음"
+            : closeness == 3
+            ? "보통"
+            : closeness == 4
+            ? "높음"
+            : "매우 높음"
+        } (${closeness}/5)`;
+
+        // Show result section
+        resultSection.classList.remove("hidden");
+
+        // Scroll to result
+        resultSection.scrollIntoView({ behavior: "smooth" });
+      });
+
+      // Reset button
+      const resetBtn = document.getElementById("resetBtn");
+
+      resetBtn.addEventListener("click", () => {
+        resultSection.classList.add("hidden");
+        recommendationForm.reset();
+
+        // Reset relationship buttons
+        relationButtons.forEach((btn) => {
+          btn.classList.remove("bg-purple-100", "border-purple-300");
+          btn.classList.add("border-gray-300");
+        });
+
+        // Scroll to form
+        document
+          .querySelector("section.bg-gray-50")
+          .scrollIntoView({ behavior: "smooth" });
+      });
+    </script>
+  </body>
+</html>
