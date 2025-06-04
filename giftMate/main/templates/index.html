@@ -207,7 +207,8 @@
             </p>
           </div>
           <div class="p-6">
-            <form id="recommendationForm" method="POST" action="/api/recommend" enctype="application/x-www-form-urlencoded">
+            <form id="recommendationForm" method="POST" action="{% url 'main:index' %}">
+              {% csrf_token %}
               <div class="mb-6">
                 <label class="block text-gray-700 font-medium mb-2"
                   >결혼하는 분과의 관계</label
@@ -383,6 +384,7 @@
                   rows="3"
                   placeholder="AI에게 알려주고 싶은 특별한 상황이나 고려사항을 입력해주세요"
                   class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-300"
+                  style="resize: none;"
                 ></textarea>
                 <p class="text-sm text-gray-500 mt-1">예: 특별한 경제적 상황, 과거에 준 금액, 특별한 관계 등</p>
               </div>
@@ -400,7 +402,8 @@
       </div>
     </section>
 
-    <!-- Recommendation Result (Initially Hidden) -->
+    <!--
+    Recommendation Result (Initially Hidden)
     <section id="resultSection" class="py-16 bg-white hidden">
       <div class="container mx-auto px-4">
         <div class="max-w-3xl mx-auto">
@@ -549,6 +552,7 @@
         </div>
       </div>
     </section>
+  -->
 
     <!-- Testimonials -->
     <section class="py-16 bg-purple-50">
@@ -818,90 +822,90 @@
       const recommendationForm = document.getElementById("recommendationForm");
       const resultSection = document.getElementById("resultSection");
 
-      recommendationForm.addEventListener("submit", (e) => {
-        e.preventDefault();
+      // recommendationForm.addEventListener("submit", (e) => {
+      //   e.preventDefault();
 
-        // Get form values
-        const relationship = relationshipInput.value || "friend";
-        const closeness = document.getElementById("closeness").value;
-        const duration = document.getElementById("duration").value;
-        const region = document.getElementById("region").value;
-        const attendance = document.querySelector(
-          'input[name="attendance"]:checked'
-        ).value;
-        const additionalInfo = document.getElementById("additionalInfo").value;
+      //   // Get form values
+      //   const relationship = relationshipInput.value || "friend";
+      //   const closeness = document.getElementById("closeness").value;
+      //   const duration = document.getElementById("duration").value;
+      //   const region = document.getElementById("region").value;
+      //   const attendance = document.querySelector(
+      //     'input[name="attendance"]:checked'
+      //   ).value;
+      //   const additionalInfo = document.getElementById("additionalInfo").value;
 
-        // Simulate AI recommendation (in a real app, this would be an API call)
-        // In a real implementation, the additionalInfo would be sent to the AI model
-        let recommendedAmount = 0;
-        let relationshipText = "";
+      //   // Simulate AI recommendation (in a real app, this would be an API call)
+      //   // In a real implementation, the additionalInfo would be sent to the AI model
+      //   let recommendedAmount = 0;
+      //   let relationshipText = "";
 
-        // Calculate based on relationship
-        switch (relationship) {
-          case "family":
-            recommendedAmount = 200000;
-            relationshipText = "가족 (형제자매)";
-            break;
-          case "friend":
-            recommendedAmount = 150000;
-            relationshipText = "대학 동기 (5년 지기)";
-            break;
-          case "coworker":
-            recommendedAmount = 100000;
-            relationshipText = "직장 동료";
-            break;
-          case "relative":
-            recommendedAmount = 180000;
-            relationshipText = "친척 (사촌)";
-            break;
-          default:
-            recommendedAmount = 120000;
-            relationshipText = "지인";
-        }
+      //   // Calculate based on relationship
+      //   switch (relationship) {
+      //     case "family":
+      //       recommendedAmount = 200000;
+      //       relationshipText = "가족 (형제자매)";
+      //       break;
+      //     case "friend":
+      //       recommendedAmount = 150000;
+      //       relationshipText = "대학 동기 (5년 지기)";
+      //       break;
+      //     case "coworker":
+      //       recommendedAmount = 100000;
+      //       relationshipText = "직장 동료";
+      //       break;
+      //     case "relative":
+      //       recommendedAmount = 180000;
+      //       relationshipText = "친척 (사촌)";
+      //       break;
+      //     default:
+      //       recommendedAmount = 120000;
+      //       relationshipText = "지인";
+      //   }
 
-        // Adjust based on closeness
-        recommendedAmount *= 1 + (parseInt(closeness) - 3) * 0.1;
+      //   // Adjust based on closeness
+      //   recommendedAmount *= 1 + (parseInt(closeness) - 3) * 0.1;
 
-        // Adjust based on duration
-        if (duration >= 10) recommendedAmount *= 1.2;
-        else if (duration >= 5) recommendedAmount *= 1.1;
-        else if (duration <= 1) recommendedAmount *= 0.9;
+      //   // Adjust based on duration
+      //   if (duration >= 10) recommendedAmount *= 1.2;
+      //   else if (duration >= 5) recommendedAmount *= 1.1;
+      //   else if (duration <= 1) recommendedAmount *= 0.9;
 
-        // Adjust based on attendance
-        if (attendance === "no") recommendedAmount *= 0.7;
+      //   // Adjust based on attendance
+      //   if (attendance === "no") recommendedAmount *= 0.7;
 
-        // Round to nearest 10,000
-        recommendedAmount = Math.round(recommendedAmount / 10000) * 10000;
+      //   // Round to nearest 10,000
+      //   recommendedAmount = Math.round(recommendedAmount / 10000) * 10000;
 
-        // Update result display
-        document.getElementById("recommendedAmount").textContent =
-          recommendedAmount.toLocaleString() + "원";
-        document.getElementById("resultRelationship").textContent =
-          relationshipText;
-        document.getElementById("resultRegion").textContent =
-          document.getElementById("region").options[
-            document.getElementById("region").selectedIndex
-          ].text;
-        document.getElementById("resultAttendance").textContent =
-          attendance === "yes" ? "참석" : "불참";
-        document.getElementById("resultCloseness").textContent = `${
-          closeness == 1
-            ? "매우 낮음"
-            : closeness == 2
-            ? "낮음"
-            : closeness == 3
-            ? "보통"
-            : closeness == 4
-            ? "높음"
-            : "매우 높음"
-        } (${closeness}/5)`;
+      //   // Update result display
+      //   document.getElementById("recommendedAmount").textContent =
+      //     recommendedAmount.toLocaleString() + "원";
+      //   document.getElementById("resultRelationship").textContent =
+      //     relationshipText;
+      //   document.getElementById("resultRegion").textContent =
+      //     document.getElementById("region").options[
+      //       document.getElementById("region").selectedIndex
+      //     ].text;
+      //   document.getElementById("resultAttendance").textContent =
+      //     attendance === "yes" ? "참석" : "불참";
+      //   document.getElementById("resultCloseness").textContent = `${
+      //     closeness == 1
+      //       ? "매우 낮음"
+      //       : closeness == 2
+      //       ? "낮음"
+      //       : closeness == 3
+      //       ? "보통"
+      //       : closeness == 4
+      //       ? "높음"
+      //       : "매우 높음"
+      //   } (${closeness}/5)`;
 
-        // Show result section
-        resultSection.classList.remove("hidden");
+      //   // Show result section
+      //   resultSection.classList.remove("hidden");
 
-        // Scroll to result
-        resultSection.scrollIntoView({ behavior: "smooth" });
-      });
+      //   // Scroll to result
+      //   resultSection.scrollIntoView({ behavior: "smooth" });
+      // });
 
       // Reset button
       const resetBtn = document.getElementById("resetBtn");
