@@ -2,6 +2,7 @@ from django.db import models
 
 # Create your models here.
 class Recommendation(models.Model):
+    Recommendation_ID = models.AutoField(primary_key=True)
     RELATIONSHIP_CHOICES = [
         ('family', '가족'),
         ('friend', '친구'),
