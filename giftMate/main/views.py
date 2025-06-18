@@ -3,7 +3,6 @@ from django.http import HttpResponseRedirect, HttpResponse
 from main.models import Recommendation
 from django.template.loader import get_template
 
-# Create your views here.
 def index(request):
     if request.method == 'POST':
         return recommendationCreate(request)
