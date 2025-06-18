@@ -78,12 +78,52 @@
                 {% if recommendation.relationship == None %}
                 <p id="resultRelationship" class="font-medium">선택 안함</p>
                 {% else %}
-                <p id="resultRelationship" class="font-medium">{{recommendation.relationship}} ({{recommendation.duration}}년 지기)</p>
+                  {% if recommendation.relationship == "family" %}
+                <p id="resultRelationship" class="font-medium">가족 ({{recommendation.duration}}년 지기)</p>
+                  {% elif recommendation.relationship == "friend" %}
+                <p id="resultRelationship" class="font-medium">친구 ({{recommendation.duration}}년 지기)</p>
+                  {% elif recommendation.relationship == "coworker" %}
+                <p id="resultRelationship" class="font-medium">직장 동료 ({{recommendation.duration}}년 지기)</p>
+                  {% elif recommendation.relationship == "relative" %}
+                <p id="resultRelationship" class="font-medium">친척 ({{recommendation.duration}}년 지기)</p>
+                  {% endif %}
                 {% endif %}
               </div>
               <div class="bg-white border border-gray-200 rounded-lg p-4">
                 <p class="text-sm text-gray-500 mb-1">지역</p>
-                <p id="resultRegion" class="font-medium">{{recommendation.region}}</p>
+                {% if recommendation.region == "seoul" %}
+                <p id="resultRegion" class="font-medium">서울</p>
+                {% elif recommendation.region == "gyeonggi" %}
+                <p id="resultRegion" class="font-medium">경기</p>
+                {% elif recommendation.region == "incheon" %}
+                <p id="resultRegion" class="font-medium">인천</p>
+                {% elif recommendation.region == "busan" %}
+                <p id="resultRegion" class="font-medium">부산</p>
+                {% elif recommendation.region == "daegu" %}
+                <p id="resultRegion" class="font-medium">대구</p>
+                {% elif recommendation.region == "daejeon" %}
+                <p id="resultRegion" class="font-medium">대전</p>
+                {% elif recommendation.region == "ulsan" %}
+                <p id="resultRegion" class="font-medium">울산</p>
+                {% elif recommendation.region == "gangwon" %}
+                <p id="resultRegion" class="font-medium">강원</p>
+                {% elif recommendation.region == "chungbuk" %}
+                <p id="resultRegion" class="font-medium">충북</p>
+                {% elif recommendation.region == "chungnam" %}
+                <p id="resultRegion" class="font-medium">충남</p>
+                {% elif recommendation.region == "jeonbuk" %}
+                <p id="resultRegion" class="font-medium">전북</p>
+                {% elif recommendation.region == "jeonnam" %}
+                <p id="resultRegion" class="font-medium">전남</p>
+                {% elif recommendation.region == "gyeongbuk" %}
+                <p id="resultRegion" class="font-medium">경북</p>
+                {% elif recommendation.region == "gyeongnam" %}
+                <p id="resultRegion" class="font-medium">경남</p>
+                {% elif recommendation.region == "jeju" %}
+                <p id="resultRegion" class="font-medium">제주</p>
+                {% else %}
+                <p id="resultRegion" class="font-medium">선택 안함</p>
+                {% endif %}
               </div>
               <div class="bg-white border border-gray-200 rounded-lg p-4">
                 <p class="text-sm text-gray-500 mb-1">참석 여부</p>

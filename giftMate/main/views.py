@@ -19,6 +19,8 @@ def recommendationCreate(request):
                                          request.POST.get('budget_max') or None,
                                          request.POST.get('additionalInfo', ''))
     
+    
+    
     recommendation = Recommendation.objects.create(
             relationship=request.POST.get('relationship'),
             closeness=int(request.POST.get('closeness')),
